@@ -1,0 +1,6 @@
+[run]
+source = ircproto
+branch = 1
+
+[report]
+show_missing = true
