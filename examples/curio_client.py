@@ -10,7 +10,7 @@ from ircproto.events import Reply, Error, Join
 async def send_message_to_channel(host, port, nickname, channel, message):
     async def send_outgoing_data():
         # This is more complicated than it should because we want to print all outgoing data here.
-        # Normally, transport.write(conn.data_to_send()) would suffice.
+        # Normally, await sock.sendall(conn.data_to_send()) would suffice.
         output = conn.data_to_send()
         if output:
             print('>>> ' + output.decode('utf-8').replace('\r\n', '\r\n>>> ').rstrip('> \r\n'))
