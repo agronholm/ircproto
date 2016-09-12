@@ -5,12 +5,11 @@
   :target: https://coveralls.io/github/agronholm/ircproto?branch=master
   :alt: Code Coverage
 
-The IRC_ protocol is a protocol commonly used to relay HTTP requests and responses between a
-front-end web server (nginx, Apache, etc.) and a back-end web application.
+The IRC_ (Internet Relay Chat) protocol is the oldest distributed chat protocol still in widespread
+use. This library implements both client and server sides of the IRC protocol as a pure
+state-machine which only takes in bytes and returns a list of parsed events. This leaves users free
+to use any I/O approach they see fit (asyncio_, curio_, Twisted_, etc.).
 
-This library implements both client and server sides of the IRC protocol as a pure state-machine
-which only takes in bytes and returns a list of parsed events. This leaves users free to use any
-I/O approach they see fit (asyncio_, curio_, Twisted_, etc.).
 Sample code is provided for implementing both clients and servers using a variety of I/O
 frameworks.
 
