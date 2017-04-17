@@ -764,7 +764,7 @@ def decode_event(buffer, codec='utf-8', fallback_codec='iso-8859-1'):
     try:
         message = codecs.decode(buffer[:end_index], encoding=codec)
     except UnicodeDecodeError:
-        message = codecs.decode(buffer[:end_index], encoding=codec, errors='replace')
+        message = codecs.decode(buffer[:end_index], encoding=fallback_codec, errors='replace')
 
     del buffer[:end_index + 2]
 
