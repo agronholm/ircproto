@@ -753,8 +753,7 @@ commands = {cls.command: cls for cls in locals().values()  # type: ignore
             if isinstance(cls, type) and issubclass(cls, Command)}
 
 
-def decode_event(buffer, decoder=codecs.getdecoder('utf-8'),
-                 fallback_decoder=codecs.getdecoder('iso-8859-1')):
+def decode_event(buffer, codec='utf-8', fallback_codec='iso-8859-1'):
     end_index = buffer.find(b'\r\n')
     if end_index == -1:
         return None
@@ -763,9 +762,9 @@ def decode_event(buffer, decoder=codecs.getdecoder('utf-8'),
         raise ProtocolError('received oversized message (%d bytes)' % (end_index + 2))
 
     try:
-        message = decoder(buffer[:end_index])[0]
+        message = codecs.decode(buffer[:end_index], encoding=codec)
     except UnicodeDecodeError:
-        message = fallback_decoder(buffer[:end_index], errors='replace')[0]
+        message = codecs.decode(buffer[:end_index], encoding=fallback_codec, errors='replace')
 
     del buffer[:end_index + 2]
 

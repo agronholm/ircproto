@@ -10,16 +10,16 @@ from ircproto.replies import reply_templates
 class BaseIRCConnection(object):
     """Base class for IRC connection state machines."""
 
-    __slots__ = ('output_codec', 'input_decoder', 'fallback_decoder', '_input_buffer',
+    __slots__ = ('output_codec', 'input_codec', 'fallback_codec', '_input_buffer',
                  '_output_buffer', '_closed')
 
     sender = None  # type: str
 
     def __init__(self, output_encoding='utf-8', input_encoding='utf-8',
                  fallback_encoding='iso-8859-1'):
-        self.output_codec = codecs.getencoder(output_encoding)
-        self.input_decoder = codecs.getdecoder(input_encoding)
-        self.fallback_decoder = codecs.getdecoder(fallback_encoding)
+        self.output_codec = output_encoding
+        self.input_codec = input_encoding
+        self.fallback_codec = fallback_encoding
         self._input_buffer = bytearray()
         self._output_buffer = bytearray()
         self._closed = False
@@ -43,7 +43,7 @@ class BaseIRCConnection(object):
         self._input_buffer.extend(data)
         events = []
         while True:
-            event = decode_event(self._input_buffer, self.input_decoder, self.fallback_decoder)
+            event = decode_event(self._input_buffer, self.input_codec, self.fallback_codec)
             if event is None:
                 return events
             else:
@@ -99,7 +99,7 @@ class BaseIRCConnection(object):
             raise ProtocolError('the connection has been closed')
 
         encoded_event = event.encode()
-        self._output_buffer.extend(self.output_codec(encoded_event)[0])
+        self._output_buffer.extend(codecs.encode(encoded_event, encoding=self.output_codec))
 
 
 class IRCClientConnection(BaseIRCConnection):
