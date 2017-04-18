@@ -63,6 +63,7 @@ class IRCTextStyle(Enum):
     reverse = '\x16'
     plain = '\x0f'
 
+
 styles_re = re.compile('(\x03\d+(?:,\d+)?)|[\x02\x03\x1d\x1f\x16\x0f]')
 
 
