@@ -274,7 +274,7 @@ class Part(Command):
         self.message = message
 
     def encode(self):
-        super(Part, self).encode(self.channel)
+        return super(Part, self).encode(self.channel, self.message)
 
 
 # Section 3.2.4
